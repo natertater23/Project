@@ -113,13 +113,14 @@ public class GUI2 extends JFrame {
 		btnLoad.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				String fileName = "Name.bin";
+				String fileName = textField_3.getText();
+				fileName+=".bin";
 				
 				
 				
 				FileInputStream fis = null;
 				try {
-					fis = new FileInputStream("Name.bin");
+					fis = new FileInputStream(fileName);
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -132,7 +133,7 @@ public class GUI2 extends JFrame {
 					e.printStackTrace();
 				}
 				try {
-					Quiz quiz = (Quiz) ois.readObject();
+					quiz = (Quiz) ois.readObject();
 				} catch (ClassNotFoundException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
