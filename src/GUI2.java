@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -72,9 +73,6 @@ public class GUI2 extends JFrame {
 		lblQuestion.setBounds(34, 126, 56, 16);
 		contentPane.add(lblQuestion);
 		
-		JLabel label = new JLabel("");
-		label.setBounds(138, 126, 288, 77);
-		contentPane.add(label);
 		
 		
 		
@@ -83,7 +81,11 @@ public class GUI2 extends JFrame {
 		contentPane.add(panel);
 		panel.setVisible(false);
 		panel.setLayout(null);
-
+		
+		JLabel label = new JLabel("\" \"");
+		label.setBounds(144, 126, 288, 77);
+		contentPane.add(label);
+		
 		
 		JLabel lblShortAnswer = new JLabel("Short Answer:");
 		lblShortAnswer.setBounds(29, 13, 132, 16);
@@ -105,44 +107,33 @@ public class GUI2 extends JFrame {
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
 		
-		String fileName = textField_3.getText() ;
-		fileName+=".bin";
-		
-		
-		
 		JButton btnLoad = new JButton("Load");
-
 		btnLoad.setBounds(380, 9, 97, 25);
 		contentPane.add(btnLoad);
-		
 		btnLoad.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				String fileName = textField_3.getText() ;
-				fileName+=".bin";
-				FileInputStream fstream = null;
+				String fileName = "Name.bin";
+				
+				
+				
+				FileInputStream fis = null;
 				try {
-					fstream = new FileInputStream(fileName);
-				} catch (FileNotFoundException e1) {
+					fis = new FileInputStream("Name.bin");
+				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e.printStackTrace();
 				}
-				ObjectInputStream ostream = null;
+				ObjectInputStream ois = null;
 				try {
-					ostream = new ObjectInputStream(fstream);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				try {
-					quiz = (Quiz) ostream.readObject();
-				} catch (ClassNotFoundException | IOException e) {
+					ois = new ObjectInputStream(fis);
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				try {
-					fstream.close();
-				} catch (IOException e) {
+					Quiz quiz = (Quiz) ois.readObject();
+				} catch (ClassNotFoundException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

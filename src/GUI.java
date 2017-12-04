@@ -204,6 +204,7 @@ public class GUI extends JFrame implements java.io.Serializable{
 				try {
 					ObjectOutputStream oos = new ObjectOutputStream(fos);
 					oos.writeObject(quiz);
+					oos.flush();
 					oos.close();
 					System.exit(0); 
 				} catch (IOException e1) {
