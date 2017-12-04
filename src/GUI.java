@@ -1,6 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.io.*;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -13,8 +13,9 @@ import javax.swing.JToggleButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JCheckBox;
+import java.io.*;
 
-public class GUI extends JFrame {
+public class GUI extends JFrame implements java.io.Serializable{
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -48,6 +49,8 @@ public class GUI extends JFrame {
 	 * Create the frame.
 	 */
 	public GUI() {
+		Quiz quiz = new Quiz(100);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 857, 535);
 		contentPane = new JPanel();
@@ -82,6 +85,8 @@ public class GUI extends JFrame {
 		lblShortAnswer.setBounds(12, 249, 99, 16);
 		contentPane.add(lblShortAnswer);
 		ButtonGroup group = new ButtonGroup();
+		ButtonGroup group2 = new ButtonGroup();
+		
 		
 		JRadioButton rdbtnShortAnswer = new JRadioButton("Short Answer");
 		rdbtnShortAnswer.setBounds(245, 201, 127, 25);
@@ -99,25 +104,105 @@ public class GUI extends JFrame {
 		group.add(rdbtnMulitpleChoice);
 		group.add(rdbtnShortAnswer);
 		
+		JRadioButton radioButton = new JRadioButton("");
+		radioButton.setBounds(163, 310, 127, 25);
+		contentPane.add(radioButton);
+		
+		JRadioButton rdbt = new JRadioButton("");
+		rdbt.setBounds(293, 310, 127, 25);
+		contentPane.add(rdbt);
+		
+		JRadioButton radioButton_1 = new JRadioButton("");
+		radioButton_1.setBounds(424, 310, 127, 25);
+		contentPane.add(radioButton_1);
+		
+		JRadioButton radioButton_2 = new JRadioButton("");
+		radioButton_2.setBounds(563, 310, 127, 25);
+		contentPane.add(radioButton_2);
+		
+		group2.add(radioButton_1);
+		group2.add(radioButton_2);
+		group2.add(rdbt);
+		group2.add(radioButton);
+		
+		String question = textField.getText();
+		String answer;
+		
 		
 		
 		JButton btnAddQuestionWhen = new JButton("ADD Question when done");
 		btnAddQuestionWhen.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// if statement asking which choice was selected then making a question based on info 
-				// add question to quiz here 
+				if(group.getSelection() == rdbtnMultipleAnswer) {
+					// about to kms 
+				}
+				else if(group.getSelection()==rdbtnMulitpleChoice) {
+					String[] answersArr = new String[4];
+					answersArr[0]=textField_6.getText();
+					answersArr[1]=textField_7.getText();
+					answersArr[2]=textField_8.getText();
+					answersArr[3]=textField_9.getText();
+					if(group2.getSelection()==radioButton) {
+						quiz.add(new MultipleChoiceQuestion(question,textField_6.getText(),answersArr));
+					}
+					else if(group2.getSelection()== rdbt) {
+						quiz.add(new MultipleChoiceQuestion(question,textField_7.getText(),answersArr));
+					}
+					else if(group2.getSelection()==radioButton_1) {
+						quiz.add(new MultipleChoiceQuestion(question,textField_8.getText(),answersArr));
+					}
+					else {
+						quiz.add(new MultipleChoiceQuestion(question,textField_9.getText(),answersArr));
+					}
+					//quiz.add(new MulitpleChoiceQuesiton(question,));
+				}
+				else {
+				quiz.add(new Question(question,textField.getText()));
+				
+				}
+				
+				group.clearSelection();
+				group2.clearSelection();
+				textField.setText("");
+				textField_1.setText("");
+				textField_2.setText("");
+				textField_3.setText("");
+				textField_4.setText("");
+				textField_5.setText("");
+				textField_6.setText("");
+				textField_7.setText("");
+				textField_8.setText("");
+				textField_9.setText("");
+
+				// add question to quiz here
 				// clear console 
 			}
 		});
 		btnAddQuestionWhen.setBounds(326, 421, 198, 25);
 		contentPane.add(btnAddQuestionWhen);
-		
-		
+			
 		JButton btnWhenDoneWith = new JButton("When done with Entire Quiz");
 		btnWhenDoneWith.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				FileOutputStream fos = null;
+				try {
+					fos = new FileOutputStream("test3.bin");
+				} catch (FileNotFoundException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				try {
+					ObjectOutputStream oos = new ObjectOutputStream(fos);
+					oos.writeObject(quiz);
+					oos.close();
+					System.exit(0); 
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				//load quiz into a binary file :(
 			}
 		});
@@ -191,6 +276,11 @@ public class GUI extends JFrame {
 		JCheckBox checkBox_2 = new JCheckBox("");
 		checkBox_2.setBounds(536, 368, 113, 25);
 		contentPane.add(checkBox_2);
+		
+		JLabel lblChooseCorrect = new JLabel("Choose Correct:");
+		lblChooseCorrect.setBounds(26, 310, 116, 16);
+		contentPane.add(lblChooseCorrect);
+		
 		// if statement asking which choice was selected then making a question based on info 
 	}
 }

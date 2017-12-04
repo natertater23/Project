@@ -1,5 +1,5 @@
 
-public class Quiz {
+public class Quiz implements java.io.Serializable{
 private Question[] arr;
 private int j = 0;
 public Quiz(int num) {

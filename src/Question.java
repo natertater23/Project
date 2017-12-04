@@ -1,5 +1,5 @@
 
-public class Question{
+public class Question implements java.io.Serializable{
 	private String question, answer;
 	public Question(String question, String answer){
 		this.question = question;

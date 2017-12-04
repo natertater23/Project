@@ -1,4 +1,4 @@
-public class MultipleChoiceQuestion extends Question{
+public class MultipleChoiceQuestion extends Question implements java.io.Serializable{
 public String[] arr;
 public MultipleChoiceQuestion(String question, String answer,String[] arr){
 	super(question, answer);
