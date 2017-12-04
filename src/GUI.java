@@ -28,6 +28,7 @@ public class GUI extends JFrame implements java.io.Serializable{
 	private JTextField textField_7;
 	private JTextField textField_8;
 	private JTextField textField_9;
+	private JTextField textField_10;
 
 	/**
 	 * Launch the application.
@@ -181,14 +182,21 @@ public class GUI extends JFrame implements java.io.Serializable{
 		});
 		btnAddQuestionWhen.setBounds(326, 421, 198, 25);
 		contentPane.add(btnAddQuestionWhen);
-			
+		textField_10 = new JTextField();
+		textField_10.setBounds(118, 29, 116, 22);
+		contentPane.add(textField_10);
+		textField_10.setColumns(10);
+		
 		JButton btnWhenDoneWith = new JButton("When done with Entire Quiz");
 		btnWhenDoneWith.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				FileOutputStream fos = null;
+				String fileName = textField_10.getText();
+				fileName+=".bin";
+				System.out.println(fileName);
 				try {
-					fos = new FileOutputStream("test3.bin");
+					fos = new FileOutputStream(fileName);
 				} catch (FileNotFoundException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
@@ -280,6 +288,11 @@ public class GUI extends JFrame implements java.io.Serializable{
 		JLabel lblChooseCorrect = new JLabel("Choose Correct:");
 		lblChooseCorrect.setBounds(26, 310, 116, 16);
 		contentPane.add(lblChooseCorrect);
+		
+		JLabel lblNameQuiz = new JLabel("Name Quiz:");
+		lblNameQuiz.setBounds(26, 32, 85, 16);
+		contentPane.add(lblNameQuiz);
+		
 		
 		// if statement asking which choice was selected then making a question based on info 
 	}

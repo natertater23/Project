@@ -9,6 +9,9 @@ public void add(Question q) {
 	arr[j] = q.clone();
 	j++;
 }
+public int length() {
+	return arr.length;
+}
 public Question get(int i) {
 	return arr[i];
 }
